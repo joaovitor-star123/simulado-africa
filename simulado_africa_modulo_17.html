@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#17365d">
+<title>Simulado - África | Módulo 17</title>
+<style>
+:root{
+  --primary:#17365d; --secondary:#2f75b5; --light:#f4f7fb;
+  --text:#1f2937; --muted:#6b7280; --ok:#16803c; --bad:#c62828;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--light);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:24px 18px;text-align:center}
+header h1{margin:0 0 8px;font-size:24px}
+header p{margin:0;opacity:.92;font-size:14px}
+.container{max-width:760px;margin:0 auto;padding:16px}
+.status{position:sticky;top:0;z-index:5;background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:14px;box-shadow:0 3px 14px #00000012}
+.status-row{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:bold}
+.progress{height:8px;background:#e5e7eb;border-radius:20px;margin-top:9px;overflow:hidden}
+.progress-bar{height:100%;background:var(--secondary);width:0%;transition:.3s}
+.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 3px 16px #0000000d}
+.question-number{color:var(--secondary);font-weight:bold;font-size:13px;margin-bottom:8px}
+.question{font-size:18px;line-height:1.45;font-weight:700;margin-bottom:15px}
+.option{display:block;border:2px solid #e5e7eb;border-radius:12px;padding:13px 14px;margin:9px 0;cursor:pointer;transition:.15s;background:#fff}
+.option:hover{border-color:#9bbddd;background:#f8fbff}
+.option input{margin-right:9px;accent-color:var(--secondary)}
+.option.correct{border-color:var(--ok);background:#eaf8ef}
+.option.wrong{border-color:var(--bad);background:#fff0f0}
+.explanation{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#f3f4f6;font-size:14px;line-height:1.45}
+.explanation.show{display:block}
+button{border:0;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+#finish{background:var(--primary);color:#fff;width:100%;margin:4px 0 12px}
+#restart{background:#e5e7eb;color:#111827;width:100%;display:none}
+#result{display:none;text-align:center;background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 3px 16px #0000000d}
+.score{font-size:42px;font-weight:800;color:var(--primary)}
+.message{font-size:16px;margin:8px 0 16px}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 0 25px}
+@media(max-width:520px){
+  header h1{font-size:21px}
+  .container{padding:11px}
+  .card{padding:15px}
+  .question{font-size:17px}
+  .option{font-size:15px;padding:12px}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 Simulado — África</h1>
+  <p>Módulo 17 • História e Geografia • 18 questões</p>
+</header>
+
+<main class="container">
+  <div class="status">
+    <div class="status-row">
+      <span id="answered">Respondidas: 0/18</span>
+      <span id="scoreLive">Acertos: 0</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="bar"></div></div>
+  </div>
+
+  <div id="result">
+    <div>Resultado final</div>
+    <div class="score" id="finalScore">0/18</div>
+    <div class="message" id="finalMessage"></div>
+  </div>
+
+  <form id="quiz"></form>
+  <button id="finish" type="button">✅ Finalizar simulado</button>
+  <button id="restart" type="button" onclick="location.reload()">🔄 Refazer simulado</button>
+
+  <div class="footer">Conteúdo elaborado com base nas páginas do Módulo 17 enviadas para estudo.</div>
+</main>
+
+<script>
+const questions = [
+{q:"Sobre as sociedades africanas pré-coloniais, é correto afirmar que:",a:["A África era formada apenas por grupos nômades sem organização política.","Não existiam cidades ou atividades comerciais.","Existiam diversos reinos, impérios, cidades e diferentes formas de organização social.","Todos os povos africanos possuíam a mesma cultura."],c:2,e:"A África pré-colonial possuía sociedades diversas, incluindo reinos, impérios, cidades, comércio e diferentes formas de organização."},
+{q:"Qual dos seguintes foi um importante império africano?",a:["Império do Mali","Império Romano-Africano","Império Português do Congo","Império Industrial Africano"],c:0,e:"O Império do Mali foi uma importante formação política africana, assim como Gana e Songai."},
+{q:"Inicialmente, a presença europeia na África estava muito relacionada:",a:["À construção de escolas modernas.","À busca por novas rotas comerciais e riquezas.","À criação de países independentes.","Ao combate às monarquias africanas."],c:1,e:"As navegações europeias buscavam novas rotas comerciais e riquezas, como ouro e outros recursos."},
+{q:"Um dos fatores que dificultou o avanço europeu pelo interior da África foi:",a:["A inexistência de recursos naturais.","A ausência de rios.","A presença de obstáculos naturais e doenças tropicais.","A falta de interesse econômico europeu."],c:2,e:"Florestas, desertos, rios, cachoeiras e doenças tropicais dificultaram o avanço europeu."},
+{q:"O tráfico transatlântico de africanos escravizados provocou:",a:["Crescimento populacional uniforme na África.","Fortalecimento de todas as sociedades africanas.","Desestruturação de famílias e sociedades e impactos demográficos.","Fim imediato das guerras africanas."],c:2,e:"O tráfico provocou perda populacional, separação de famílias, conflitos e desestruturação de sociedades."},
+{q:"O neocolonialismo africano intensificou-se no final do século XIX principalmente devido:",a:["À redução da produção industrial europeia.","À necessidade europeia de matérias-primas e mercados consumidores.","Ao fim do comércio internacional.","À independência dos países africanos."],c:1,e:"A Segunda Revolução Industrial aumentou a procura por matérias-primas e mercados consumidores."},
+{q:"A Conferência de Berlim ocorreu entre:",a:["1500 e 1501","1750 e 1751","1884 e 1885","1945 e 1946"],c:2,e:"A Conferência de Berlim ocorreu em 1884-1885 e estabeleceu regras para a ocupação europeia da África."},
+{q:"Uma consequência da divisão territorial realizada pelas potências europeias foi:",a:["O respeito às fronteiras históricas dos povos africanos.","A eliminação de todos os conflitos étnicos.","A separação de grupos e a união de povos rivais dentro dos mesmos territórios.","A criação imediata de Estados democráticos africanos."],c:2,e:"As fronteiras coloniais desconsideraram muitas realidades históricas e culturais, gerando tensões."},
+{q:"A expressão “dividir para conquistar” refere-se:",a:["À divisão da África entre os próprios povos africanos.","À estratégia europeia de explorar rivalidades entre grupos locais para facilitar a dominação.","À divisão das colônias americanas.","À independência dos países africanos."],c:1,e:"Os colonizadores aproveitavam ou estimulavam rivalidades para facilitar o controle da população."},
+{q:"Uma das características da economia colonial africana foi:",a:["A prioridade absoluta para a agricultura de subsistência.","A criação de grandes propriedades e atividades voltadas à exportação.","A distribuição igualitária das terras.","O fim da exploração da mão de obra."],c:1,e:"Os colonizadores implantaram grandes propriedades e atividades econômicas voltadas aos interesses de exportação."},
+{q:"A chamada “missão civilizatória” foi utilizada pelos europeus para:",a:["Justificar a imposição de sua cultura e dominação sobre povos africanos.","Defender a independência imediata dos países africanos.","Promover a igualdade entre os povos.","Acabar com o imperialismo."],c:0,e:"A ideia de missão civilizatória serviu para justificar a dominação e a imposição cultural, apoiadas em ideias racistas."},
+{q:"A descolonização africana ocorreu principalmente:",a:["Entre 1500 e 1600.","Entre 1700 e 1800.","Entre 1850 e 1900.","Entre 1950 e 1980."],c:3,e:"Após a Segunda Guerra Mundial, a descolonização avançou rapidamente, especialmente entre 1950 e 1980."},
+{q:"Um fator que contribuiu para a descolonização africana foi:",a:["O fortalecimento das potências europeias após a Segunda Guerra Mundial.","O enfraquecimento econômico, político e militar das potências europeias.","O fim dos movimentos de independência.","A expansão do colonialismo europeu."],c:1,e:"As potências coloniais europeias saíram enfraquecidas da Segunda Guerra Mundial, favorecendo os movimentos de independência."},
+{q:"Durante a Guerra Fria, Estados Unidos e União Soviética:",a:["Não demonstraram interesse pela África.","Disputaram influência geopolítica no continente.","Dividiram oficialmente todos os países africanos.","Impediram os movimentos de independência."],c:1,e:"As duas superpotências buscavam ampliar sua influência política e geopolítica na África."},
+{q:"Um dos problemas enfrentados por diversos países africanos após a independência foi:",a:["A inexistência de fronteiras.","A eliminação das diferenças entre os povos.","A permanência de conflitos relacionados às fronteiras e às disputas internas.","O desaparecimento da dependência econômica."],c:2,e:"Fronteiras coloniais, disputas internas e dependência econômica continuaram afetando vários países."},
+{q:"Qual alternativa apresenta uma importante herança africana na cultura brasileira?",a:["Candomblé, samba e elementos de origem africana na língua.","Apenas a arquitetura europeia.","Somente a agricultura moderna.","Apenas o idioma português."],c:0,e:"A influência africana aparece na música, religião, culinária, língua e em muitos outros aspectos da cultura brasileira."},
+{q:"O candomblé e a umbanda são exemplos de:",a:["Religiões exclusivamente europeias.","Práticas religiosas que possuem importantes matrizes africanas.","Sistemas políticos africanos.","Formas de organização econômica colonial."],c:1,e:"Candomblé e umbanda possuem importantes elementos e matrizes de origem africana."},
+{q:"A principal crítica apresentada pela ideia de uma “história com apenas uma narrativa” é:",a:["Que todos os países africanos possuem a mesma realidade.","Que a África deve ser compreendida apenas pelos problemas sociais.","Que uma visão única e estereotipada pode esconder a diversidade das sociedades africanas.","Que não existem diferenças culturais dentro da África."],c:2,e:"Uma única narrativa pode criar estereótipos e esconder a grande diversidade histórica, cultural e social do continente."}
+];
+
+const quiz=document.getElementById("quiz");
+questions.forEach((x,i)=>{
+  const card=document.createElement("section");
+  card.className="card";
+  card.innerHTML=`<div class="question-number">QUESTÃO ${i+1} DE ${questions.length}</div>
+  <div class="question">${x.q}</div>
+  <div class="options">${x.a.map((op,j)=>`
+    <label class="option" data-q="${i}" data-a="${j}">
+      <input type="radio" name="q${i}" value="${j}">
+      <strong>${String.fromCharCode(65+j)})</strong> ${op}
+    </label>`).join("")}</div>
+  <div class="explanation" id="exp${i}"></div>`;
+  quiz.appendChild(card);
+});
+
+let finished=false;
+quiz.addEventListener("change",()=>{
+  if(finished)return;
+  updateStatus();
+});
+function updateStatus(){
+  let answered=0;
+  for(let i=0;i<questions.length;i++){
+    if(document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+  }
+  document.getElementById("answered").textContent=`Respondidas: ${answered}/${questions.length}`;
+  document.getElementById("bar").style.width=(answered/questions.length*100)+"%";
+}
+document.getElementById("finish").onclick=()=>{
+  if(finished)return;
+  let unanswered=[];
+  questions.forEach((x,i)=>{
+    const selected=document.querySelector(`input[name="q${i}"]:checked`);
+    if(!selected) unanswered.push(i+1);
+  });
+  if(unanswered.length){
+    alert("Você ainda não respondeu às questões: "+unanswered.join(", ")+".");
+    document.querySelector(`input[name="q${unanswered[0]-1}"]`).closest(".card").scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  finished=true;
+  let score=0;
+  questions.forEach((x,i)=>{
+    const selected=Number(document.querySelector(`input[name="q${i}"]:checked`).value);
+    document.querySelectorAll(`[data-q="${i}"]`).forEach(el=>{
+      const a=Number(el.dataset.a);
+      if(a===x.c) el.classList.add("correct");
+      if(a===selected && a!==x.c) el.classList.add("wrong");
+    });
+    const exp=document.getElementById("exp"+i);
+    exp.innerHTML=(selected===x.c?"✅ <strong>Correto!</strong> ":"❌ <strong>Incorreto.</strong> ")+x.e;
+    exp.classList.add("show");
+    if(selected===x.c) score++;
+  });
+  document.getElementById("scoreLive").textContent=`Acertos: ${score}`;
+  document.getElementById("finalScore").textContent=`${score}/${questions.length}`;
+  let pct=score/questions.length*100;
+  document.getElementById("finalMessage").textContent =
+    pct>=90?"🏆 Excelente! Você está muito bem preparado(a).":
+    pct>=70?"👏 Muito bom! Revise apenas os pontos que errou.":
+    pct>=50?"📖 Bom começo! Faça uma revisão e tente novamente.":
+    "💪 Não desanime! Revise o resumo e refaça o simulado.";
+  document.getElementById("result").style.display="block";
+  document.getElementById("finish").style.display="none";
+  document.getElementById("restart").style.display="block";
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+};
+</script>
+</body>
+</html>
